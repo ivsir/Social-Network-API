@@ -27,6 +27,7 @@ I created a mock Social Network API with the following functions:
 2) node index.js
 
 ## Usage
+
 <a href="https://github.com/ivsir/Social-Network-API">This is the link to my WebPage</a>
 
 ## Credits
