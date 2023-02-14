@@ -26,6 +26,29 @@ const timeSince = (date) => {
   }
   return Math.floor(seconds) + " seconds";
 };
+
+
+const reactionSchema = new Schema({
+  reactionId:{
+    type: Schema.Types.ObjectId,
+    default: () => new Types.ObjectId(),
+  },
+  reactionBody:{
+    type: String,
+    require: true,
+    maxLength: 280,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  createdAt:{
+    type: Date,
+    default: Date.now,
+    get: (date) => timeSince(date),
+  }
+})
+
 // Schema to create Post model
 const thoughtSchema = new Schema(
   {
@@ -38,42 +61,26 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (date) => timeSince(date),
+      get: function(dateCreated){
+        return timeSince(dateCreated)
+      }
     },
     username: {
       type: String,
       require: true,
     },
-    reactions: [{
-      reactionId:{
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId(),
-      },
-      reactionBody:{
-        type: String,
-        require: true,
-        maxLength: 280,
-      },
-      username: {
-        type: String,
-        required: true,
-      },
-      createdAt:{
-        type: Date,
-        default: Date.now,
-        get: (date) => timeSince(date),
-      }
-    }],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
+      getters: true,
       virtuals: true,
     },
     id: false,
   }
 );
 
-// Create a virtual property `getTags` that gets the amount of tags associated with an thought
+// Create a virtual property `reactionCount` that gets the amount of reactions associated with an thought
 thoughtSchema
   .virtual("reactionCount")
   // Getter
@@ -81,7 +88,7 @@ thoughtSchema
     return this.reactions.length;
   });
 
-// Initialize our Thought model
-const Thought = model("thought", thoughtSchema);
+// Initialize our thought model
+const Thought = model("Thought", thoughtSchema);
 
 module.exports = Thought;
