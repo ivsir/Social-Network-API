@@ -30,6 +30,10 @@ I created a mock Social Network API with the following functions:
 
 <a href="https://github.com/ivsir/Social-Network-API">This is the link to my WebPage</a>
 
+
+https://user-images.githubusercontent.com/106352994/218658372-e6e01827-730e-4e73-b743-29d8153c3030.mp4
+
+
 ## Credits
 Risvi Tareq
 
